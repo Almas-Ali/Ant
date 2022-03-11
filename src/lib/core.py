@@ -1,4 +1,3 @@
-import imp
 import os
 import platform
 from importlib import import_module
@@ -21,7 +20,7 @@ class Shell:
     '''Main shell class.'''
 
     def __init__(self) -> None:
-        pass
+        self.vars = {}
 
     def __repr__(self):
         return '<Ant Object>'
@@ -39,7 +38,7 @@ class Shell:
                 self.execute(input_)
 
             except KeyboardInterrupt:
-                print('Keyboard interupt !')
+                print('\nKeyboard interupt ! Type exit to exit.')
 
     def get_input(self):
         pass
@@ -52,23 +51,36 @@ class Shell:
             self._GO = False
 
         else:
-            try:
-                file = import_module(f'bin.{input_[0]}')
-                if file.__name__ == 'bin.cmd':
-                    if input_[1] == 'help':
-                        file.__help__()
+            if input_[0] == 'set':
+                try:
+                    data = ' '.join(input_)
+                    data = data.replace('set', '').strip().split('=')
+                    data = [j.strip() for j in data]
+                    print(data)
+                    self.vars[data[0]] = data[1]
+                except:
+                    print('[!] Invalid Syntax')
+            elif input_[0][0] == '$':
+                print(self.vars)
+                try:
+                    print(self.vars[input_[0][1:]])
+                except:
+                    print(f'\"{input_[0][1:]}\" undefined !')
+            else:
+                try:
+                    file = import_module(f'bin.{input_[0]}')
+                    if file.__name__ == 'bin.cmd':
+                        if input_[1] == 'help':
+                            file.__help__()
+                        elif len(input_) > 1:
+                            file.main(' '.join(input_[1:]))
+                        else:
+                            file.main('cmd')
                     elif len(input_) > 1:
-                        file.main(' '.join(input_[1:]))
+                        if input_[1] == 'help':
+                            file.__help__()
                     else:
-                        file.main('cmd')
-                elif len(input_) > 1:
-                    if input_[1] == 'help':
-                        file.__help__()
-                else:
-                    file.main()
+                        file.main()
 
-            except ImportError:
-                print(f'\"{input_[0]}\" command not exist !')
-
-    # def reader(self, stdout:str):
-    #     print(stdout.decode('utf-8'))
+                except ImportError:
+                    print(f'\"{input_[0]}\" command not exist !')
