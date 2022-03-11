@@ -2,6 +2,8 @@ import os
 import platform
 from importlib import import_module
 
+__version__ = '0.0.1'
+
 
 class color:
     '''Related colors.'''
@@ -56,26 +58,47 @@ class Shell:
                     data = ' '.join(input_)
                     data = data.replace('set', '').strip().split('=')
                     data = [j.strip() for j in data]
-                    print(data)
                     self.vars[data[0]] = data[1]
                 except:
                     print('[!] Invalid Syntax')
             elif input_[0][0] == '$':
-                print(self.vars)
                 try:
                     print(self.vars[input_[0][1:]])
                 except:
                     print(f'\"{input_[0][1:]}\" undefined !')
+
+            elif input_[0] == 'version':
+                print(__version__)
+
+            elif input_[0][0:2] == '//':
+                pass
+
             else:
                 try:
                     file = import_module(f'bin.{input_[0]}')
+
                     if file.__name__ == 'bin.cmd':
-                        if input_[1] == 'help':
-                            file.__help__()
-                        elif len(input_) > 1:
-                            file.main(' '.join(input_[1:]))
-                        else:
+                        try:
+                            if input_[1] == 'help':
+                                file.__help__()
+                            elif len(input_) > 1:
+                                file.main(' '.join(input_[1:]))
+                            else:
+                                file.main('cmd')
+                        except:
                             file.main('cmd')
+
+                    elif file.__name__ == 'bin.echo':
+                        try:
+                            if input_[1] == 'help':
+                                file.__help__()
+                            elif len(input_) > 1:
+                                file.main(' '.join(input_[1:]))
+                            else:
+                                file.main('')
+                        except:
+                            file.main('')
+
                     elif len(input_) > 1:
                         if input_[1] == 'help':
                             file.__help__()

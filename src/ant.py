@@ -1,5 +1,6 @@
 from lib import core
 
+'''Ant - An Interpreter'''
 
 def main():
     shell = core.Shell()
