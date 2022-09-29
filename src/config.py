@@ -18,12 +18,14 @@ class color:
 
 path = os.getcwd()
 user = platform.uname().node
-# path_dir = os.environ["HOME"] # Production environment
-path_dir = "./"
+path_dir = os.environ["HOME"] # Production environment
+# path_dir = "./" # Testing
+root = os.path.dirname(os.path.abspath(__file__))
 
 profile = {
     "prompt": f"{color.OKGREEN + user} @ {path + color.ENDC} \n>>> ",
     "path": path_dir,
+    "root": root,
     "history": ".ant_history",
     "alias": {
         "cls": "clear",

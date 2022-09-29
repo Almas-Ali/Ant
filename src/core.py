@@ -61,8 +61,9 @@ class Shell:
 
     def shell_history(self):
 
-        commands = glob.glob('bin/*.py')
-        commands = [x.lstrip('bin/').replace('.py', '') for x in commands]
+        commands = glob.glob(os.path.join(profile['root'], 'bin/*.py'))
+        commands = [x.replace(os.path.join(
+            profile['root'], 'bin/'), '').replace('.py', '') for x in commands]
 
         readline.set_completer(HistoryManager(commands).completer1)
         # readline.set_completer(completer2)
