@@ -27,6 +27,9 @@ Internal librarys and short help:
 - pwd 
 - rmdir
 - set \<var = value> 
+- uptime 
+- webis 
+- whoami 
 - version 
 
 [+] and much more...
