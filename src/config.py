@@ -1,5 +1,7 @@
 import platform
 import os
+from sys import path_hooks
+
 
 class color:
     '''Related colors.'''
@@ -13,11 +15,14 @@ class color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 path = os.getcwd()
 user = platform.uname().node
+# path_dir = os.environ['HOME'] # Production environment
+path_dir = './'
 
 profile = {
-	"prompt" : f'{color.OKGREEN + user} @ {path + color.ENDC} \n>>> ',
-	"path" : " "
-
+    "prompt": f'{color.OKGREEN + user} @ {path + color.ENDC} \n>>> ',
+    "path": path_dir,
+    "history": '.ant_history'
 }

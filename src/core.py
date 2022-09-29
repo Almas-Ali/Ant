@@ -1,8 +1,34 @@
+import readline
+import rlcompleter
+import atexit
 import os
 from importlib import import_module
 from config import profile
+import glob
 
-__version__ = '0.0.1'
+__version__ = '0.1.1'
+
+
+class HistoryManager:
+
+    def __init__(self, commands) -> None:
+        self.commands = commands
+
+    def save(prev_h_len, histfile):
+        import readline
+        new_h_len = readline.get_current_history_length()
+        readline.set_history_length(1000)
+        readline.append_history_file(new_h_len - prev_h_len, histfile)
+
+    def completer1(self, text, state):
+        return [x for x in self.commands if x.startswith(text)][state]
+        # try:
+        #     return options[state]
+        # except IndexError:
+        #     return None
+
+    def completer2(text, state):
+        return (glob.glob(text+'*')+[None])[state]
 
 
 class Shell:
@@ -10,6 +36,13 @@ class Shell:
 
     def __init__(self) -> None:
         self.vars: dict = {}
+        self.alias: dict = {}
+        # If history exists in path directory
+        isHistoryExists = glob.glob(
+            os.path.join(profile['path'], profile['history']))
+        if isHistoryExists == []:
+            with open(profile['history'], 'a') as history:
+                history.write('')
 
     def __repr__(self):
         return '<Ant Object>'
@@ -20,15 +53,54 @@ class Shell:
         while self._GO:
             try:
                 input_ = input(profile['prompt'])
-                with open('.history', 'a') as history:
-                    history.writelines(input_+'\n')
+                # with open(profile['history'], 'a') as history:
+                #     history.writelines(input_+'\n')
                 self.execute(input_)
 
             except KeyboardInterrupt:
-                print('\nKeyboard interupt ! Type exit to exit.')
+                # print('\nKeyboard interupt ! Type exit to exit.')
+                pass
 
-    def get_input(self):
-        pass
+    def shell_history(self):
+        import readline
+        import rlcompleter
+        import atexit
+        import os
+
+        commands = glob.glob('bin/*.py')
+        commands = [x.lstrip('bin/').replace('.py', '') for x in commands]
+
+        readline.set_completer(HistoryManager(commands).completer1)
+        # readline.set_completer(completer2)
+        readline.set_completer_delims(' \t\n;')
+
+        if 'libedit' in readline.__doc__:
+            readline.parse_and_bind("bind ^I rl_complete")
+        else:
+            readline.parse_and_bind("tab: complete")
+
+        histfile = os.path.join(profile['path'], profile['history'])
+
+        # if hasattr(readline, histfile):
+        #     try:
+        #       readline.read_history_file(histfile)
+        #     except IOError:
+        #         pass
+        # readline.read_history_file(histfile)
+
+        try:
+            readline.read_history_file(histfile)
+            h_len = readline.get_current_history_length()
+        except FileNotFoundError:
+            open(histfile, 'w').close()
+            h_len = 0
+
+        atexit.register(HistoryManager.save, h_len, histfile)
+
+        # atexit.register(readline.append_history_file, histfile)
+
+        # print(excep)
+        del os, histfile, readline, rlcompleter
 
     def execute(self, input_):
         input_ = input_.split(' ')
@@ -61,21 +133,30 @@ class Shell:
         elif input_[0][0:2] == '//':
             pass
 
+        elif input_[0] == 'alias':
+            try:
+                data = ' '.join(input_)
+                data = data.replace('alias', '').strip().split('=')
+                data = [j.strip() for j in data]
+                self.alias[data[0]] = data[1]
+            except:
+                for key, value in self.alias.items():
+                    print(f'{key} = {value}')
+
         else:
             try:
                 file = getattr(import_module(
                     f'bin.{input_[0]}'), 'Exclusive')
                 file = file()
 
-                try:
-                    arg = input_[1:]
-                    if arg == []:
-                        arg.append('')
-                    file.run(args=arg)
-                    
-                except Exception as e:
-                    print('error: import 1 line')
-                    print(e)
+                arg = input_[1:]
+                if arg == []:
+                    arg.append('')
+                file.run(args=arg)
 
             except ImportError:
-                print(f'ant: \"{input_[0]}\" not found!')
+                try:
+                    val = self.alias[input_[0]]
+                    self.execute(val)
+                except:
+                    print(f'ant: \"{input_[0]}\" not found!')
