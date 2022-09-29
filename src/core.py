@@ -10,33 +10,33 @@ __version__ = '0.1.1'
 
 
 class HistoryManager:
+    '''History and autocomplete manager'''
 
     def __init__(self, commands) -> None:
         self.commands = commands
 
     def save(prev_h_len, histfile):
-        import readline
+        '''History object saver'''
         new_h_len = readline.get_current_history_length()
         readline.set_history_length(1000)
         readline.append_history_file(new_h_len - prev_h_len, histfile)
 
     def completer1(self, text, state):
+        '''Commands completer'''
         return [x for x in self.commands if x.startswith(text)][state]
-        # try:
-        #     return options[state]
-        # except IndexError:
-        #     return None
 
     def completer2(text, state):
+        '''Path and files completer'''
         return (glob.glob(text+'*')+[None])[state]
 
 
 class Shell:
     '''Main shell class.'''
 
-    def __init__(self) -> None:
+    def __init__(self, alias: dict = {}) -> None:
         self.vars: dict = {}
-        self.alias: dict = {}
+        self.alias = alias
+
         # If history exists in path directory
         isHistoryExists = glob.glob(
             os.path.join(profile['path'], profile['history']))
@@ -53,8 +53,6 @@ class Shell:
         while self._GO:
             try:
                 input_ = input(profile['prompt'])
-                # with open(profile['history'], 'a') as history:
-                #     history.writelines(input_+'\n')
                 self.execute(input_)
 
             except KeyboardInterrupt:
@@ -62,10 +60,6 @@ class Shell:
                 pass
 
     def shell_history(self):
-        import readline
-        import rlcompleter
-        import atexit
-        import os
 
         commands = glob.glob('bin/*.py')
         commands = [x.lstrip('bin/').replace('.py', '') for x in commands]
@@ -81,13 +75,6 @@ class Shell:
 
         histfile = os.path.join(profile['path'], profile['history'])
 
-        # if hasattr(readline, histfile):
-        #     try:
-        #       readline.read_history_file(histfile)
-        #     except IOError:
-        #         pass
-        # readline.read_history_file(histfile)
-
         try:
             readline.read_history_file(histfile)
             h_len = readline.get_current_history_length()
@@ -96,11 +83,6 @@ class Shell:
             h_len = 0
 
         atexit.register(HistoryManager.save, h_len, histfile)
-
-        # atexit.register(readline.append_history_file, histfile)
-
-        # print(excep)
-        del os, histfile, readline, rlcompleter
 
     def execute(self, input_):
         input_ = input_.split(' ')

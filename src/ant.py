@@ -1,10 +1,11 @@
 import core
+from config import profile
 
 '''Ant - An Interpreter'''
 
 
 def main():
-    shell = core.Shell()
+    shell = core.Shell(alias=profile['alias'])
     shell.shell_history()
     shell.start()
 
