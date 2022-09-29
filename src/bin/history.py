@@ -18,11 +18,11 @@ history help  - To get this help screen
             self.__help__()
 
         elif args[0] == 'clear':
-            with open('.history.ant', 'w') as history:
+            with open('.ant_history', 'w') as history:
                 history.write('')
 
         else:
-            with open('.history.ant', 'r') as history:
+            with open('.ant_history', 'r') as history:
                 i = 0
                 f2 = [i.rstrip('\n') for i in history.readlines()]
                 for line in f2:
