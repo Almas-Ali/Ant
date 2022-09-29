@@ -11,6 +11,7 @@ It is developed in Python for any platform. The main perpose for making it is ge
 There is a huge internal library and external command access.
 
 Internal librarys and short help:
+- alias
 - // comments
 - cat 
 - clear 
