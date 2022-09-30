@@ -29,8 +29,8 @@ profile = {
     "history": ".ant_history",
     "alias": {
         "cls": "clear",
-        "dir": "ls",
-        "cd" : "chdir",
+        "dir": "cmd ls",
+        "cd" : "cmd chdir",
         "md" : "mkdir",
         "rd" : "rmdir",
         "git": "cmd git",

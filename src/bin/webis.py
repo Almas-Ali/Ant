@@ -20,8 +20,8 @@ webis help - To see this help screen
 
         elif args[0] == '-u':
             try:
-                web = whois.whois(args.url)
-                for key, value in web.items():
+                web = whois.query(args[1])
+                for key, value in web.__dict__.items():
                     print(f'{key} : {value}')
             except Exception as e:
                 # print('[!] Connection Error !')

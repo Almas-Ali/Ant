@@ -140,6 +140,7 @@ class Shell:
             except ImportError:
                 try:
                     val = self.alias[input_[0]]
+                    val = f"{val} {' '.join(input_[1:])}"
                     self.execute(val)
                 except:
                     print(f'ant: \"{input_[0]}\" not found!')
