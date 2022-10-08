@@ -1,6 +1,5 @@
 import platform
 import os
-from sys import path_hooks
 
 
 class color:
@@ -15,26 +14,31 @@ class color:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
-
-path = os.getcwd()
-user = platform.uname().node
-path_dir = os.environ["HOME"] # Production environment
+# User's home directory
+path_dir = os.environ["HOME"]  # Production environment
 # path_dir = "./" # Testing
 root = os.path.dirname(os.path.abspath(__file__))
 
+# Prompt settings
+path = os.getcwd()
+user = platform.uname().node
+prompt = f"{ color.OKGREEN }{ user } @ { path }{ color.ENDC } \n>>> "
+
 profile = {
-    "prompt": f"{color.OKGREEN + user} @ {path + color.ENDC} \n>>> ",
+    "prompt": prompt,
     "path": path_dir,
     "root": root,
     "history": ".ant_history",
     "alias": {
         "cls": "clear",
         "dir": "cmd ls",
-        "cd" : "cmd chdir",
-        "md" : "mkdir",
-        "rd" : "rmdir",
+        "cd": "cmd chdir",
+        "md": "mkdir",
+        "rd": "rmdir",
         "git": "cmd git",
         "sudo": "cmd sudo"
-    }
-
+    },
+    "preloaded_action": [
+        ""
+    ]
 }
