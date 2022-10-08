@@ -4,10 +4,11 @@ class Exclusive(UserLib):
 	
 	def __help__(self):
 		usage = '''Usage: cat
-	A concatenation of files
+	Concatenate files and print on the standard output
 
-cat FILE  - To read a file in terminal
-cat help - To see this help screen
+cat <file> - To print the contents of a file
+cat -v     - To print the version of the command
+cat help   - To get this help screen
 '''
 		print(usage)
 

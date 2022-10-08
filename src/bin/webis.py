@@ -7,16 +7,26 @@ class Exclusive(UserLib):
 
     def __help__(self):
         usage = '''Usage: webis
-    A website whois information collector utility.
-webis -u URL  - To see whois information of particular website.
-webis help - To see this help screen
+    Get information about a website
+
+webis <url>     - To get information about a website
+webis -u <url>  - To get information about a website
+webis -v        - To get the version of the program
+webis help      - To get this help screen
 '''
         print(usage)
+
+    def __version__(self):
+        ver = 'version 1.0'
+        print(ver)
 
     def run(self, args: list = None):
 
         if args[0] == 'help':
             self.__help__()
+        
+        elif args[0] == '-v':
+            self.__version__()
 
         elif args[0] == '-u':
             try:

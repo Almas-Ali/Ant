@@ -11,17 +11,25 @@ class Exclusive(UserLib):
 
     def __help__(self):
         usage = '''Usage: ping
-    To ping any website or ip addresses.
-It's only supports single ping at a time. Multi-threading is not supported yet.
+    To ping a host
 
-ping DOMAIN - To get response from server
+ping <host> - To ping a host
+ping -v     - To print the version of the command
+ping help   - To get this help screen
 '''
         print(usage)
+    
+    def __version__(self):
+        ver = 'version 1.0'
+        print(ver)
 
     def run(self, args: list = None):
 
         if args[0] == 'help':
             self.__help__()
+
+        elif args[0] == '-v':
+            self.__version__()
 
         else:
             ping(args[0], verbose=True, timeout=2, interval=1, count=5)

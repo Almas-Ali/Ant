@@ -7,16 +7,25 @@ class Exclusive(UserLib):
 
     def __help__(self):
         usage = '''Usage: uptime
-    A uptime monitor of your system
-uptime      - To see current uptime
-uptime help - To see this help screen
+    Print the uptime of the system
+
+uptime      - To print the uptime of the system
+uptime -v   - To print the version of the command
+uptime help - To get this help screen
 '''
         print(usage)
+
+    def __version__(self):
+        ver = 'version 1.0'
+        print(ver)
 
     def run(self, args: list = None):
 
         if args[0] == 'help':
             self.__help__()
+
+        elif args[0] == '-v':
+            self.__version__()
 
         else:
             t = time.monotonic()

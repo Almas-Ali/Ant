@@ -6,11 +6,13 @@ class Exclusive(UserLib):
 
     def __help__(self):
         usage = '''usage: whoami
-    A system checker utility
-whoami      - To see user name
-whoami -a   - To see full system information
-whoami -v   - To see utility version number
-whoami help - To see this help screen
+    Print the current user
+
+whoami      - To print the current user
+whoami -a   - To print all the system information
+whoami -v   - To print the version of whoami
+whoami help - To get this help screen
+
 '''
         print(usage)
 
