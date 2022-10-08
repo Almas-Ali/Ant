@@ -15,17 +15,18 @@ class HistoryManager:
     def __init__(self, commands) -> None:
         self.commands = commands
 
+    @staticmethod
     def save(prev_h_len, histfile):
         '''History object saver'''
         new_h_len = readline.get_current_history_length()
-        readline.set_history_length(1000)
+        readline.set_history_length(2147483647)
         readline.append_history_file(new_h_len - prev_h_len, histfile)
 
     def completer1(self, text, state):
         '''Commands completer'''
         return [x for x in self.commands if x.startswith(text)][state]
 
-    def completer2(text, state):
+    def completer2(self, text, state):
         '''Path and files completer'''
         return (glob.glob(text+'*')+[None])[state]
 
@@ -37,11 +38,11 @@ class Shell:
         self.vars: dict = {}
         self.alias = alias
 
-        # If history exists in path directory
+        # If history exists in path directory, Else create one.
         isHistoryExists = glob.glob(
             os.path.join(profile['path'], profile['history']))
         if isHistoryExists == []:
-            with open(profile['history'], 'a') as history:
+            with open(os.path.join(profile['path'], profile['history']), 'a') as history:
                 history.write('')
 
     def __repr__(self):
@@ -54,6 +55,7 @@ class Shell:
             try:
                 input_ = input(profile['prompt'])
                 self.execute(input_)
+                self.store_history(input_)
 
             except KeyboardInterrupt:
                 # print('\nKeyboard interupt ! Type exit to exit.')
@@ -83,7 +85,12 @@ class Shell:
             open(histfile, 'w').close()
             h_len = 0
 
-        atexit.register(HistoryManager.save, h_len, histfile)
+        # atexit.register(HistoryManager.save, h_len, histfile)
+        # HistoryManager.store_history(histfile)
+
+    def store_history(self, command: str):
+        with open(os.path.join(profile['path'], profile['history']), 'a') as history:
+            history.write(f'{command}\n')
 
     def execute(self, input_):
         input_ = input_.split(' ')
