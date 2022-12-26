@@ -4,11 +4,15 @@ class UserLib:
     def __init__(self):
         pass
 
+    def __short_help__(self):
+        short_help = 'help: \tTo get help for a command'
+        print(short_help)
+
     def __help__(self):
-        usege = '''Ant user library
+        usage = '''Ant user library
 version 1.0
 '''
-        print(usege)
+        print(usage)
 
     def __version__(self):
         ver = 'version 1.0'
