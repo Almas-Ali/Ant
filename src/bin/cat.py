@@ -17,7 +17,7 @@ cat help   - To get this help screen
 '''
         print(usage)
 
-    def run(self, args: list = None):
+    def run(self, args: list = None, *arg, **kwargs):
         if args[0] == 'help':
             self.__help__()
 

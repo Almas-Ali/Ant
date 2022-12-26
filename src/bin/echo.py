@@ -1,5 +1,5 @@
 from userlib import UserLib
-
+import re
 
 class Exclusive(UserLib):
 
@@ -22,7 +22,8 @@ echo help   - To get this help screen
         ver = 'version 1.0'
         print(ver)
 
-    def run(self, args: list = None):
+    def run(self, args: list = None, *arg, **kwargs):
+
         if args[0] == 'help':
             self.__help__()
 
@@ -30,4 +31,14 @@ echo help   - To get this help screen
             self.__version__()
 
         else:
-            print(' '.join(args))
+            try:
+                # find all the variables
+                variables = re.findall(r'\$[a-zA-Z0-9_]+', ' '.join(args))
+                # replace the variables with their values
+                for i in variables:
+                    args = [j.replace(i, self.vars[i[1:]]) for j in args]
+                print(' '.join(args))
+
+            except Exception as e:
+                print(e)
+                print(' '.join(args))

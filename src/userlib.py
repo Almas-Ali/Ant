@@ -18,7 +18,7 @@ version 1.0
         ver = 'version 1.0'
         print(ver)
 
-    def run(self, args: list = None):
+    def run(self, args: list = None, *arg, **kwargs):
         use = '''Congratulations!
 Your library works!
 '''

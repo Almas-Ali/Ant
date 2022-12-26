@@ -27,7 +27,7 @@ help help       - To get this help screen
         ver = 'version 1.0'
         print(ver)
 
-    def run(self, args: list = None):
+    def run(self, args: list = None, *arg, **kwargs):
 
         if args[0] == 'help':
             self.__help__()
@@ -45,6 +45,7 @@ help help       - To get this help screen
                 import_module(f'bin.{i}').Exclusive().__short_help__()
 
             print('''
+Type $<variable> = <value> to set a variable and $<variable> to get the value of a variable
 Type \'help <command>\' to get help for a specific command
 Type \'exit\' to exit the interpreter
 ''')

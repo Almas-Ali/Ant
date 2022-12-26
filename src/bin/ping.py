@@ -27,7 +27,7 @@ ping help   - To get this help screen
         ver = 'version 1.0'
         print(ver)
 
-    def run(self, args: list = None):
+    def run(self, args: list = None, *arg, **kwargs):
 
         if args[0] == 'help':
             self.__help__()
