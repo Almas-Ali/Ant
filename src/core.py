@@ -6,7 +6,7 @@ from importlib import import_module, reload
 import config
 import glob
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 profile = config.profile
 
 
@@ -52,7 +52,7 @@ class Shell:
 
     def start(self):
         self._GO: bool = True
-        
+
         for i in self.profile['preloaded_actions']:
             self.execute(i)
 
@@ -65,7 +65,7 @@ class Shell:
                 input_ = input(profile['prompt'])
                 self.execute(input_)
                 self.store_history(input_)
-                
+
             except KeyboardInterrupt:
                 # print('\nKeyboard interupt ! Type exit to exit.')
                 print()
@@ -111,20 +111,35 @@ class Shell:
             print('exiting...')
             self._GO = False
 
-        elif input_[0] == 'set':
-            try:
-                data = ' '.join(input_)
-                data = data.replace('set', '').strip().split('=')
-                data = [j.strip() for j in data]
-                self.vars[data[0]] = data[1]
-            except:
-                print('[!] Invalid Syntax')
-
         elif input_[0][0] == '$':
             try:
-                print(self.vars[input_[0][1:]])
-            except:
-                print(f'\"{input_[0][1:]}\" undefined !')
+                data = ' '.join(input_)
+                data = data.replace('$', '').strip().split('=')
+                data = [j.strip() for j in data]
+
+                if len(data[0].split(' ')) > 1:
+                    print('Syntax error !')
+                    return
+                
+                elif len(data) == 1:
+                    print('Syntax error !')
+                    return
+                
+                elif data[0] == '':
+                    print('Syntax error !')
+                    return
+
+                # if len(data[1]) == 0:
+                #     print('Syntax error !')
+                #     return
+
+                self.vars[data[0]] = data[1]
+
+            except Exception as e:
+                try:
+                    print(self.vars[input_[0][1:]])
+                except Exception as e:
+                    print(f'\"{input_[0][1:]}\" undefined !')
 
         elif input_[0] == 'version':
             print(__version__)
@@ -144,14 +159,17 @@ class Shell:
 
         else:
             try:
+                reload(import_module(f'bin.{input_[0]}'))
                 file = getattr(import_module(
                     f'bin.{input_[0]}'), 'Exclusive')
                 file = file()
 
                 arg = input_[1:]
+                # Manage empty args
                 if arg == []:
                     arg.append('')
-                file.run(args=arg)
+
+                file.run(args=arg, vars=self.vars,)
 
             except ImportError:
                 try:
