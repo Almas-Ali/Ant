@@ -2,11 +2,12 @@ import readline
 import rlcompleter
 import atexit
 import os
-from importlib import import_module
-from config import profile
+from importlib import import_module, reload
+import config
 import glob
 
 __version__ = '0.1.1'
+profile = config.profile
 
 
 class HistoryManager:
@@ -37,6 +38,7 @@ class Shell:
     def __init__(self, alias: dict = {}) -> None:
         self.vars: dict = {}
         self.alias = alias
+        self.profile = profile
 
         # If history exists in path directory, Else create one.
         isHistoryExists = glob.glob(
@@ -50,16 +52,23 @@ class Shell:
 
     def start(self):
         self._GO: bool = True
+        
+        for i in self.profile['preloaded_actions']:
+            self.execute(i)
 
         while self._GO:
             try:
+                config = import_module('config')
+                reload(config)
+                profile = config.profile
+
                 input_ = input(profile['prompt'])
                 self.execute(input_)
                 self.store_history(input_)
-
+                
             except KeyboardInterrupt:
                 # print('\nKeyboard interupt ! Type exit to exit.')
-                pass
+                print()
 
     def shell_history(self):
 
