@@ -2,7 +2,13 @@ from userlib import UserLib
 
 
 class Exclusive(UserLib):
+
+    def __short_help__(self):
+        short_help = 'echo: \tPrint text to the screen'
+        print(short_help)
+
     def __help__(self):
+
         usage = '''Usage: echo <text>
     Print text to the screen
 

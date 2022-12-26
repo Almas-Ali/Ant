@@ -5,6 +5,10 @@ import datetime
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'uptime: Print the uptime of the system'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: uptime
     Print the uptime of the system

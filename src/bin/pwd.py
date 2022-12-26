@@ -4,6 +4,10 @@ import os
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'pwd: \tPrint working directory'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: pwd
     Print working directory

@@ -4,6 +4,10 @@ import os
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'rmdir: \tRemove Directory command'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: rmdir
     Remove Directory command
@@ -24,7 +28,7 @@ rmdir help  - To get this help screen
 
         if args[0] == 'help':
             self.__help__()
-        
+
         elif args[0] == '-v':
             self.__version__()
 

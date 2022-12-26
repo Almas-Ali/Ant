@@ -4,6 +4,10 @@ import platform
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'whoami: Print the current user'
+        print(short_help)
+
     def __help__(self):
         usage = '''usage: whoami
     Print the current user

@@ -4,6 +4,10 @@ import os
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'ls: \tList directory contents'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: ls
 To get all directors and file of current location.

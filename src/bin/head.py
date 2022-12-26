@@ -3,6 +3,10 @@ from userlib import UserLib
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'head: \tPrint first 5 lines of a file'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: head
     Print first 5 lines of a file

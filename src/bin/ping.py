@@ -9,6 +9,10 @@ from pythonping import ping
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'ping: \tPing a host'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: ping
     To ping a host
@@ -18,7 +22,7 @@ ping -v     - To print the version of the command
 ping help   - To get this help screen
 '''
         print(usage)
-    
+
     def __version__(self):
         ver = 'version 1.0'
         print(ver)

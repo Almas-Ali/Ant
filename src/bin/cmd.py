@@ -4,6 +4,10 @@ import os
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help =  'cmd: \tExecute a command in the shell'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: cmd
     Execute a command in the shell

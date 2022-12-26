@@ -4,6 +4,10 @@ import os
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'clear: \tClear the screen'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: clear
     Clear the screen
@@ -19,10 +23,10 @@ clear help - To get this help screen
         print(ver)
 
     def run(self, args: list = None):
-        
+
         if args[0] == 'help':
             self.__help__()
-        
+
         elif args[0] == '-v':
             self.__version__()
 

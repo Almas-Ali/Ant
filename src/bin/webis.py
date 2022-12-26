@@ -5,11 +5,14 @@ import whois
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'webis: \tGet information about a website'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: webis
     Get information about a website
 
-webis <url>     - To get information about a website
 webis -u <url>  - To get information about a website
 webis -v        - To get the version of the program
 webis help      - To get this help screen
@@ -24,7 +27,7 @@ webis help      - To get this help screen
 
         if args[0] == 'help':
             self.__help__()
-        
+
         elif args[0] == '-v':
             self.__version__()
 
@@ -34,7 +37,7 @@ webis help      - To get this help screen
                 for key, value in web.__dict__.items():
                     print(f'{key} : {value}')
             except Exception as e:
-                # print('[!] Connection Error !')
-                print(e)
+                # print(e)
+                print('[!] Connection Error !')
         else:
             print('whois: error: check \'whois help\' for usage.')

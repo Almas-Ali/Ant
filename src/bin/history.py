@@ -4,6 +4,10 @@ import os
 
 class Exclusive(UserLib):
 
+    def __short_help__(self):
+        short_help = 'history: Get all previously used commands'
+        print(short_help)
+
     def __help__(self):
         usage = '''Usage: history
     To get all previously used commands.
