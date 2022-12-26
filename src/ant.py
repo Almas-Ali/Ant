@@ -5,7 +5,7 @@ from config import profile
 
 
 def main():
-    shell = core.Shell(alias=profile['alias'])
+    shell = core.Shell(alias=profile['aliases'])
     shell.shell_history()
     shell.start()
 
