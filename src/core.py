@@ -101,6 +101,13 @@ class Shell:
         with open(os.path.join(profile['path'], profile['history']), 'a') as history:
             history.write(f'{command}\n')
 
+    def script_executer(self, script: str):
+        self.lines = 0
+        with open(script, 'r') as _script:
+            for line in _script.readlines():
+                self.lines += 1
+                self.execute(line.strip())
+
     def execute(self, input_):
         input_ = input_.split(' ')
 
@@ -117,23 +124,23 @@ class Shell:
                 data = data.replace('$', '').strip().split('=')
                 data = [j.strip() for j in data]
 
-                if len(data[0].split(' ')) > 1:
-                    print('Syntax error !')
-                    return
-                
-                elif len(data) == 1:
-                    print('Syntax error !')
-                    return
-                
-                elif data[0] == '':
+                if data[0] == '':
                     print('Syntax error !')
                     return
 
-                # if len(data[1]) == 0:
-                #     print('Syntax error !')
-                #     return
+                if data[1] == '':
+                    print('Syntax error !')
+                    return
 
-                self.vars[data[0]] = data[1]
+                if len(data) == 1:
+                    print('Syntax error !')
+                    return
+
+                try:
+                    _out = self.execute(self.vars[data[1]])
+                    self.vars[data[0]] = _out
+                except Exception as e:
+                    self.vars[data[0]] = data[1]
 
             except Exception as e:
                 try:
@@ -141,10 +148,40 @@ class Shell:
                 except Exception as e:
                     print(f'\"{input_[0][1:]}\" undefined !')
 
+        elif input_[0] == 'varlist':
+            for i in self.vars:
+                print(f'{i} = \t{self.vars[i]}')
+
+        elif input_[0] == 'varclear':
+            self.vars = {}
+
+        elif input_[0] == 'read':
+            input_ = [i for i in input_ if i != '']
+            try:
+                if input_[1] == '' or input_[2] == '':
+                    print('Syntax error !')
+                    return
+
+                if len(input_[1:]) > 2:
+                    print('Syntax error !')
+                    return
+
+                if input_[1][0] == '$':
+                    try:
+                        self.vars[input_[1][1:]] = input(input_[2])
+                    except:
+                        print('Syntax error !')
+                        return
+                else:
+                    print('Syntax error !')
+            except Exception as e:
+                print(e)
+                print('Syntax error !')
+
         elif input_[0] == 'version':
             print(__version__)
 
-        elif input_[0][0:2] == '//':
+        elif input_[0][0:2] == '//' or input_[0][0] == '#':
             pass
 
         elif input_[0] == 'alias':
