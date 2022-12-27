@@ -30,9 +30,7 @@ if __name__ == '__main__':
 
     elif args.script:
         _shell = core.Shell()
-        with open(args.script, 'r') as _script:
-            for line in _script.readlines():
-                _shell.execute(line.strip())
+        _shell.script_executer(args.script)
 
     else:
         main()
