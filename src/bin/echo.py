@@ -36,9 +36,8 @@ echo help   - To get this help screen
                 variables = re.findall(r'\$[a-zA-Z0-9_]+', ' '.join(args))
                 # replace the variables with their values
                 for i in variables:
-                    args = [j.replace(i, self.vars[i[1:]]) for j in args]
+                    args = [j.replace(i, kwargs.get('vars')[i[1:]]) for j in args]
                 print(' '.join(args))
 
             except Exception as e:
-                print(e)
                 print(' '.join(args))
