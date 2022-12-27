@@ -1,4 +1,9 @@
 // This is an Ant interpreter testing script.
 
-$version = 1.0.0
-echo $version
+$version = 0.1.2
+echo Version $version is on testing...
+
+$version
+
+read $variable >>>
+echo input is : $variable
