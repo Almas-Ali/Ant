@@ -13,11 +13,22 @@ path = os.getcwd()
 user = platform.uname().node
 prompt = f"{ rong.Mark.GREEN }{ user } @ { path }{ rong.Mark.END } \n>>> "
 
+# PATH settings
+ANT_PATH = [
+
+]
+
+SYSTEM_PATH = os.environ["PATH"].split(":")
+SYSTEM_PATH.extend([
+    # Add your custom system path here
+])
 
 profile = {
     "prompt": prompt,
     "path": path_dir,
     "root": root,
+    "ant_path": ANT_PATH,
+    "system_path": SYSTEM_PATH,
     "history": ".ant_history",
     "aliases": {
         "cls": "clear",
