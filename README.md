@@ -491,7 +491,7 @@ Installation is not ready yet! But you can clone this repo and run it from sourc
 
 ```bash
 # Clone this repo
-git clone
+git clone https://github.com/Almas-Ali/Ant.git
 
 # Go to ant source folder
 cd ant/src
@@ -501,29 +501,17 @@ python3 ant.py
 
 # Use ant -h to get help about Ant CLI
 python3 ant.py -h
+
+# Use ant -v to get version of Ant CLI
+python3 ant.py -v
 ```
 
 
-<br/>
-
-    Windows:
-        - Comming soon
-
-
-<br/>
-
-    Linux:
-        - Comming soon
-
-<br/>
-
-    Mac:
-        - Comming soon
 
 
 
 ## Create a command
-If you want to create a custom command the use this template as reference:<br/>
+If you want to create a custom command then use this template as reference:<br/>
 
 ```python
 from userlib import UserLib
@@ -560,30 +548,53 @@ custom_command version
             do_something_here
 
 ```
-Now, save it as `<command_name>.py` into `bin/` folder.
+Now, save it as `<command_name>.py` into `bin/` folder. You can also add your custom path anywhere you want. Just add your custom path to `ANT_PATH` variable in `config.py` file.
 <br/>
 **Congratulations!** You have successfully created your very first ant command.
 
 
 ## Ant Interpreter
-Ant Interpreter is a python script. You can run it from your terminal by typing `python3 ant.py` or `python ant.py`
+Ant Interpreter is a python script. You can run it from your terminal by typing `python3 ant.py` or `python ant.py` or `py ant.py`
 <br><br>
-Use `ant.py -h` to get help for Ant Interpreter.
+
+There is a lot of things that you can twick in Ant Interpreter. You can change the prompt, add more commands, change the color of the prompt etc. You can also add your custom commands to Ant Interpreter. Manual custom path settings for internal and external/os paths. Just add your custom path to `ANT_PATH` variable for internal commands and `SYSTEM_PATH` for Operating System commands in `config.py` file.
 
 
 ## Ant CLI
 Ant CLI is here. Now you can use Ant from your native terminal. Just type `ant -c <command>` to run any Ant command from your terminal. Use `ant -s <script>` to run any Ant script from your terminal.
 <br><br>
+
 Use `ant -h` to get help for Ant cli.
 
+```bash
+# python ant.py -h 
+usage: ant.py [-h] [-v] [-c COMMAND] [-s SCRIPT]
+
+options:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  -c COMMAND, --command COMMAND
+                        Run a command
+  -s SCRIPT, --script SCRIPT
+                        Run a script
+
+```
 
 ## Ant Script
 Ant script is a file with `.ant` extension. It is a simple text file with Ant commands. You can run Ant script from Ant CLI or Ant Interpreter.
 
+From Ant CLI:
+
+```bash
+python ant.py -s <script_name>.ant
+python ant.py --script <script_name>.ant
+```
+
+
 
 ## Contribute
 <!-- If you want to contribute then follow instructions in [Contributions](./CONTRIBUTIONS.md) -->
-Help us to add more usefull commands by letting know in issue or add by pull request.
+Help us to add more useful commands by letting know in issue or add by pull request.
 
 
 *Developed by - [Md. Almas Ali][1]* 
