@@ -31,4 +31,10 @@ mkdir help  - To get this help screen
             self.__version__()
 
         else:
-            os.mkdir(args[0])
+            if args[0] == '':
+                print('mkdir: error: file name required!')
+            else:
+                try:
+                    os.mkdir(args[0])
+                except:
+                    print(f'mkdir: error: {args[0]}: File exists')

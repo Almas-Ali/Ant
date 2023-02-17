@@ -35,13 +35,13 @@ whoami help - To get this help screen
         elif args[0] == '-a':
             sys_info = platform.uname()
             print(f'''\
-            Username  : {sys_info.node}
-            System    : {sys_info.system}
-            Release   : {sys_info.release}
-            Version   : {sys_info.version}
-            Machine   : {sys_info.machine}
-            Processor : {sys_info.processor}\
-            ''')
+Username  : {sys_info.node}
+System    : {sys_info.system}
+Release   : {sys_info.release}
+Version   : {sys_info.version}
+Machine   : {sys_info.machine}
+Processor : {sys_info.processor}\
+''')
 
         else:
             sys_info = platform.uname()

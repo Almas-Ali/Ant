@@ -25,7 +25,10 @@ cat help   - To get this help screen
             print('cat: error: file name required!')
 
         else:
-            with open(args[0], 'r') as f:
-                f2 = [i.rstrip('\n') for i in f.readlines()]
-                for i in f2:
-                    print(i)
+            try:
+                with open(args[0], 'r') as f:
+                    f2 = [i.rstrip('\n') for i in f.readlines()]
+                    for i in f2:
+                        print(i)
+            except:
+                print(f'cat: error: {args[0]}: No such file or directory')

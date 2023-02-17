@@ -33,7 +33,15 @@ rmdir help  - To get this help screen
             self.__version__()
 
         elif args[0] == '--sub':
-            inp = input(f'Are you sure you want to delete {args[1]} [y/n]: ')
+            if args[1] == '':
+                print('rmdir: error: file name required!')
+                return
+            if args[2] == '-f':
+                inp = 'y'
+            else:
+                inp = input(
+                    f'Are you sure you want to delete {args[1]} [y/n]: ')
+                
             if inp == 'y':
                 try:
                     os.removedirs(args[1])
@@ -49,4 +57,19 @@ rmdir help  - To get this help screen
                 print('Error: Directory not found')
 
         else:
-            os.rmdir(args[0])
+            if args[0] == '':
+                print('rmdir: error: file name required!')
+            else:
+                if args[1] == '-f':
+                    inp = 'y'
+                else:
+                    inp = input(
+                        f'Are you sure you want to delete {args[0]} [y/n]: ')
+
+                if inp == 'y':
+                    try:
+                        os.rmdir(args[0])
+                    except:
+                        print('Error: Directory not found')
+                else:
+                    print('Execution terminated')

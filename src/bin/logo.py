@@ -37,7 +37,7 @@ logo help   - To get this help screen
     /  \   _ __ | |_ 
    / /\ \ | '_ \| __|
   / ____ \| | | | |_ 
- /_/    \_\_| |_|\__|                  
+ /_/    \_\_| |_|\__|
 """
             logo = rong.Text(logo, fg="green", styles=['bold', 'blink'])
             logo.print()

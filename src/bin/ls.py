@@ -10,7 +10,7 @@ class Exclusive(UserLib):
 
     def __help__(self):
         usage = '''Usage: ls
-To get all directors and file of current location.
+    To get all directors and file of current location.
 
 ls       - Everything in current folder
 ls -v    - To print the version of the command

@@ -33,10 +33,9 @@ help help       - To get this help screen
             self.__help__()
 
         elif args[0] == '':
-            lists_ = glob.glob1(os.path.join(profile['root'], 'bin'), '*.py')
-            print(lists_)
-            lists_ = [i.replace('.py', '') for i in lists_]
-            # lists_.remove('__init__')
+            # Listing all the commands in the bin directory and getting their short help
+            lists_ = glob.glob1(os.path.join(profile['BASE_DIR'], 'bin'), '*.py') # Getting all the files in the bin directory
+            lists_ = [i.replace('.py', '') for i in lists_]  # Removing the .py extension
 
             print(
                 f'Welcome to Ant Interpreter (version {import_module("core").__version__})')
