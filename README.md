@@ -1,10 +1,11 @@
 # Ant - An Interpreter
 
-**version - 0.1.2**
+**version - 0.1.3**
 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
+- [Super Global Variables](#super-global-variables)
 - [Installation](#installation)
 - [Create a command](#create-a-command)
 - [Ant CLI](#ant-cli)
@@ -288,6 +289,21 @@ Internal libraries and short help:
 </details>
 
 <details>
+<summary><strong>print</strong></summary>
+
+## print - Print a string
+
+**Usage:** print \<string>
+
+**Example:** `print Hello World`
+
+**Description:** print command is used to print a string. It is very usefull when you want to print a string. You can also use `print` command to print a string in the interactive shell. For more help about `print` command see `help print` or `print help` command.
+
+**Note:** This command is not available in the interactive shell.
+
+</details>
+
+<details>
 <summary><strong>pwd</strong></summary>
 
 ## pwd - Display the current working directory
@@ -321,6 +337,32 @@ Internal libraries and short help:
 **Example:** `rmdir test`
 
 **Description:** rmdir command is used to remove directories. It is very usefull when you want to remove directories. You can also use `rmdir` command to remove directories in the interactive shell. For more help about `rmdir` command see `help rmdir` or `rmdir help` command. There is also a pre-defined alias for `rmdir` command. You can use `rd` command to remove directories.
+</details>
+
+<details>
+<summary><strong>sysinfo</strong></summary>
+
+## sysinfo - Display the system information
+
+**Usage:** sysinfo
+
+**Example:** `sysinfo`
+
+**Description:** sysinfo command is used to display the system information. It is very usefull when you want to display the system information. You can also use `sysinfo` command to display the system information in the interactive shell. For more help about `sysinfo` command see `help sysinfo` or `sysinfo help` command.
+
+</details>
+
+<details>
+<summary><strong>type</strong></summary>
+
+## type - Display the type of a command
+
+**Usage:** type \<command_name>
+
+**Example:** `type echo`
+
+**Description:** type command is used to display the type of a command. It is very usefull when you want to display the type of a command. You can also use `type` command to display the type of a command in the interactive shell. For more help about `type` command see `help type` or `type help` command.
+
 </details>
 
 <details>
@@ -384,6 +426,18 @@ Internal libraries and short help:
 </details>
 
 <details>
+<summary><strong>where</strong></summary>
+
+## where - Display the path of a command
+
+**Usage:** where \<command>
+
+**Example:** `where ls`
+
+**Description:** where command is used to display the path of a command. It is very usefull when you want to display the path of a command. You can also use `where` command to display the path of a command in the interactive shell. For more help about `where` command see `help where` or `where help` command.
+</details>
+
+<details>
 <summary><strong>whoami</strong></summary>
 
 ## whoami - Display the current user
@@ -414,6 +468,20 @@ type `help` in the interactive shell to see all updated commands.
 **There is some more powerfull features like: Tab completion command, up/down arrow key history etc.**
 <br/>
 ***Also some ester eggs are hidden in it. Try to find them.*** 😀 
+
+
+## Super Global Variables
+
+Ant CLI has some super global variables. You can use them in your custom commands. Here is the list of super global variables:
+
+| Variable | Description |
+| --- | --- |
+| `$ANT_PATH` | Paths of Ant CLI internal commands |
+| `$ANT_VERSION` | Version of Ant CLI |
+| `$BASE_DIR` | Home directory of Ant CLI |
+| `$HOME` | Home directory of current user |
+| `$SYSTEM_PATH` | Paths of system commands |
+
 
 
 ## Installation
