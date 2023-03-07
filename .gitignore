@@ -1,3 +1,4 @@
-inspires/
 __pycache__
 .ant_history
+gui/
+ant_gui.py
