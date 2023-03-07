@@ -1,4 +1,4 @@
-from userlib import UserLib
+from lib.userlib import UserLib
 
 
 class Exclusive(UserLib):

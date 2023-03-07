@@ -3,7 +3,7 @@ For permission error use this is linux os:
 sudo setcap cap_net_raw+ep $(readlink -f $(which python))
 '''
 
-from userlib import UserLib
+from lib.userlib import UserLib
 from pythonping import ping
 
 

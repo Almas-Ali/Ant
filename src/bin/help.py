@@ -1,8 +1,7 @@
-from userlib import UserLib
-from core import Shell
+from lib.userlib import UserLib
+from lib.core import Shell, profile
 import glob
 from importlib import import_module
-from core import profile
 import os
 
 
@@ -34,8 +33,11 @@ help help       - To get this help screen
 
         elif args[0] == '':
             # Listing all the commands in the bin directory and getting their short help
-            lists_ = glob.glob1(os.path.join(profile['BASE_DIR'], 'bin'), '*.py') # Getting all the files in the bin directory
-            lists_ = [i.replace('.py', '') for i in lists_]  # Removing the .py extension
+            # Getting all the files in the bin directory
+            lists_ = glob.glob1(os.path.join(
+                profile['BASE_DIR'], 'bin'), '*.py')
+            lists_ = [i.replace('.py', '')
+                      for i in lists_]  # Removing the .py extension
 
             print(
                 f'Welcome to Ant Interpreter (version {import_module("core").__version__})')
