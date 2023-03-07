@@ -15,7 +15,7 @@ except:
     from pyreadline3 import Readline
     readline = Readline()
 
-__version__ = '0.1.3'
+__version__ = '0.2.0'
 profile = config.profile
 
 
