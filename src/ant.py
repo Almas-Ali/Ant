@@ -1,4 +1,4 @@
-import core
+from lib import core
 from config import profile
 import argparse
 
