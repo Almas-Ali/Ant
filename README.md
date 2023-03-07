@@ -1,7 +1,7 @@
 
 # Ant - An Interpreter
 
-**version - 0.1.3**
+**version - 0.2.0**
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -24,7 +24,7 @@ It is developed in Python for any platform. The main perpose for making it is ge
 
 ## Requirements
 
-- Python 3.10 or higher
+- Python 3.7 or higher
 - Linux, Windows, Mac OS (Operating System Independent)
 
 ## Features
