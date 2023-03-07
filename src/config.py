@@ -1,9 +1,10 @@
 import platform
 import os
 import rong
+from lib.userlib import SystemConfig
 
 
-# User's home directory
+# User"s home directory
 HOME_PATH = os.environ["HOME"]  # Production environment
 # HOME_PATH = "./" # Testing
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -14,17 +15,8 @@ user = platform.uname().node
 PROMPT = f"{ rong.Mark.GREEN }{ user } @ { path }{ rong.Mark.END } \n>>> "
 
 # Operating System settings
-OPERATING_SYSTEM = os.name
-match OPERATING_SYSTEM:
-    case "nt":
-        OPERATING_SYSTEM = "windows"
-    case "posix":
-        OPERATING_SYSTEM = "linux"
-    case "mac":
-        OPERATING_SYSTEM = "macos"
-    case _:
-        OPERATING_SYSTEM = "unknown"
-        
+OPERATING_SYSTEM = SystemConfig().check_os()
+
 # PATH settings
 # Ant paths
 # Add all absolute paths of your custom commands here.
@@ -57,9 +49,11 @@ profile = {
         "rd": "rmdir",
         "print": "echo",
         "sysinfo": "whoami -a",
+        "reboot": "shutdown -r -t 0"
+
     },
     "preloaded_actions": [
-        'logo',
-        'version',
+        "logo",
+        "version",
     ]
 }
