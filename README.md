@@ -1,9 +1,11 @@
+
 # Ant - An Interpreter
 
 **version - 0.1.3**
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Requirements](#requirements)
 - [Features](#features)
 - [Super Global Variables](#super-global-variables)
 - [Installation](#installation)
@@ -16,8 +18,14 @@
 
 
 ## Introduction
+
 It is developed in Python for any platform. The main perpose for making it is getting same user interface experience in multiple platforms.
 <br/>
+
+## Requirements
+
+- Python 3.10 or higher
+- Linux, Windows, Mac OS (Operating System Independent)
 
 ## Features
 
