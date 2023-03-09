@@ -8,6 +8,7 @@ import sys
 import subprocess
 from lib.backtrack import Errors
 from lib.sanitizer import Sanitizer
+from lib.userlib import stdlib
 
 try:
     import readline
@@ -17,6 +18,7 @@ except:
 
 __version__ = '0.2.0'
 profile = config.profile
+write = stdlib().write
 
 
 class HistoryManager:
@@ -54,6 +56,7 @@ class Shell:
         # sys.path = []
 
         self.define_default_vars()  # Setting default variables
+        self.shell_history()  # Setting shell history
 
         # If history exists in path directory, Else create one.
         isHistoryExists = glob.glob(
@@ -106,7 +109,9 @@ class Shell:
                 profile = config.profile
 
                 input_ = input(profile['PROMPT'])
-                self.execute(input_)
+                _output = self.execute(input_)
+                write(_output) if _output else None
+
                 self.store_history(input_)
 
             except KeyboardInterrupt:
@@ -120,7 +125,6 @@ class Shell:
             profile['BASE_DIR'], 'bin/'), '').replace('.py', '') for x in commands]
         commands.extend(self.alias.keys())
         commands.remove('__init__')
-        print(commands)
 
         readline.set_completer(HistoryManager(commands).completer1)
         # readline.set_completer(completer2)
@@ -163,8 +167,8 @@ class Shell:
             pass
 
         elif input_.get_command() == 'exit':
-            print('exiting...')
             self._GO = False
+            return 'exiting...'
 
         elif input_.get_command()[0] == '$':
             try:
@@ -180,9 +184,9 @@ class Shell:
                     self.ERRORS.syntax_error(input_[1:])
                     return
 
-                if len(data) == 1:
-                    self.ERRORS.syntax_error(input_[1:])
-                    return
+                # if len(data) == 1:
+                #     self.ERRORS.syntax_error(input_[1:])
+                #     return
 
                 try:
                     _out = self.execute(self.vars[data[1]])
@@ -194,7 +198,8 @@ class Shell:
                 try:
                     print(self.vars[input_.get_command()[1:]])
                 except Exception as e:
-                    print(f'\"{input_.get_command()[1:]}\" undefined !')
+                    # print(f'\"{input_.get_command()[1:]}\" undefined !')
+                    self.ERRORS.undefined_error(input_.get_command()[1:])
 
         # elif input_.get_command() == 'varlist':
         #     for i in self.vars:
@@ -204,7 +209,7 @@ class Shell:
         #     self.vars = {}
 
         elif input_.get_command() == 'read':
-            input_ = [i for i in input_ if i != '']
+            # input_ = [i for i in input_ if i != '']
             try:
                 if input_[1] == '' or input_[2] == '':
                     self.ERRORS.syntax_error(input_.get_args())
@@ -224,11 +229,14 @@ class Shell:
                     self.ERRORS.syntax_error(input_.get_args())
 
             except Exception as e:
-                print(e)
+                # print(e)
                 self.ERRORS.syntax_error(input_.get_args())
 
         elif input_.get_command() == 'version':
-            print(__version__)
+            if input_.get_args() == ['']:
+                return __version__
+            else:
+                self.ERRORS.syntax_error(input_.get_args())
 
         elif input_.get_command()[0:2] == '//' or input_.get_command()[0] == '#':
             pass
@@ -251,7 +259,7 @@ class Shell:
                 try:
                     try:
                         # get modules from python path and reload them to get the latest changes
-                        file = import_module(f'{input_.get_command()}')
+                        file = import_module(f'bin.{input_.get_command()}')
                         reload(file)
                         file = getattr(file, 'Exclusive')
                         file = file()
@@ -267,13 +275,12 @@ class Shell:
                     except:
                         val = self.alias[input_.get_command()]
                         val = f"{val} {' '.join(input_.get_args())}"
-                        self.execute(val)
+                        return self.execute(val)
 
                 except Exception as e:
                     # print(e)
                     if self.vars.get('only_internals', False):
-                        self.ERRORS.error(
-                            f'\"{input_.get_command()}\" not found!')
+                        self.ERRORS.command_not_found(input_.get_command())
                         return
 
                     # If not found in self.ANT_PATH, try to call system commands from self.SYSTEM_PATH
@@ -282,14 +289,11 @@ class Shell:
                             f'{__path}/{" ".join(input_)}', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 
                         if success.decode('utf-8') != '':
-                            print(success.decode('utf-8'))
-                            break
+                            return success.decode('utf-8')
 
                         if len(self.SYSTEM_PATH) - 1 == __index:
                             raise
 
             except Exception as e:
-                print(e)
-                self.ERRORS.error(
-                    f'\"{input_.get_command()}\" not found!'
-                )
+                # print(e)
+                self.ERRORS.command_not_found(input_.get_command())
