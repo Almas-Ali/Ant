@@ -1,9 +1,14 @@
-// This is an Ant interpreter testing script.
+# $only_internals = True                       # Disable external commands
 
-$version = 0.1.2
-echo Version $version is on testing...
+// This is an Ant interpreter testing script. 
+// This is a comment with // but you can use # too. For consistency, use just one of them.
+
+$version = $ANT_VERSION
+echo "Version $version is on testing..."
 
 $version
 
 read $variable >>>
-echo input is : $variable
+echo "input is : $variable"
+
+id -un
