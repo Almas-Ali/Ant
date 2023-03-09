@@ -7,7 +7,6 @@ import argparse
 
 def main():
     shell = core.Shell(alias=profile['aliases'])
-    shell.shell_history()
     shell.start()
 
 
