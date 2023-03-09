@@ -20,9 +20,9 @@ class Sanitizer:
 
         input_ = input_.strip()
         input_ = input_.replace('  ', ' ')
-        input_ = input_.split(' ') 
+        input_ = input_.split(' ')
 
-        input_ = [i for i in input_ if i != ''] # Remove empty strings
+        input_ = [i for i in input_ if i != '']  # Remove empty strings
         self.sanitized_list: list = input_
 
         return self
@@ -37,6 +37,8 @@ class Sanitizer:
 
         try:
             command = self.sanitized_list[0]
+            if command == '':
+                command = 'help'
             return command
         except:
             return ''
@@ -46,7 +48,17 @@ class Sanitizer:
 
         try:
             args = self.sanitized_list[1:]
+            if args == []:
+                args.append('')
             return args
+        except:
+            return []
+
+    def get_all(self) -> list:
+        '''Get the command and the arguments from the input.'''
+
+        try:
+            return self.sanitized_list
         except:
             return []
 
