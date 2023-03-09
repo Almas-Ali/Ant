@@ -1,4 +1,5 @@
 import os
+import sys
 
 
 class UserLib:
@@ -46,7 +47,7 @@ class SystemConfig:
 
     def check_os(self):
         '''To check current os.'''
-        
+
         if os.name == 'nt':
             return 'windows'
         elif os.name == 'posix':
@@ -67,3 +68,33 @@ class SystemConfig:
             return mac
         else:
             return False
+
+
+class stdlib:
+    '''Ant standard library class for input, output and error.'''
+
+    def __init__(self):
+        pass
+
+    def write(self, text: str = None):
+        '''To print text.'''
+        sys.stdout.write(f'{text}\n')
+
+    def read(self, text: str = None):
+        '''To take input.'''
+        sys.stdout.write(text)
+        return sys.stdin.readline()
+
+    def error(self, text: str = None):
+        '''To print error.'''
+        sys.stderr.write(f'{text}\n')
+        # sys.exit(1)
+
+    def __repr__(self):
+        return '<Ant Operations Object>'
+
+    def __str__(self):
+        return '<Ant Operations Object>'
+
+    def __len__(self):
+        return 1
