@@ -50,4 +50,4 @@ var help      - To get this help screen
                     print(f'Variable \'{args[1]}\' not found!')
 
             else:
-                print('Invalid argument!')
+                self.ERROR.command_not_found_help('var')

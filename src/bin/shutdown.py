@@ -5,7 +5,7 @@ import os
 class Exclusive(UserLib):
 
     def __short_help__(self):
-        short_help = 'shutdown: \tShutdown the system'
+        short_help = 'shutdown: Shutdown the system'
         print(short_help)
 
     def __help__(self):

@@ -1,4 +1,8 @@
-from lib.userlib import UserLib
+from lib.userlib import UserLib, stdlib
+from lib.backtrack import Errors
+import os
+
+print = stdlib().write  # Standard output
 
 
 class Exclusive(UserLib):
@@ -18,17 +22,20 @@ cat help   - To get this help screen
         print(usage)
 
     def run(self, args: list = None, *arg, **kwargs):
+        self.ERRORS = Errors()
+
         if args[0] == 'help':
             self.__help__()
 
         elif args[0] == '':
-            print('cat: error: file name required!')
+            # print('cat: error: file name required!')
+            self.ERRORS.syntax_error('cat')
 
         else:
-            try:
+            if os.path.exists(args[0]):
                 with open(args[0], 'r') as f:
                     f2 = [i.rstrip('\n') for i in f.readlines()]
                     for i in f2:
                         print(i)
-            except:
-                print(f'cat: error: {args[0]}: No such file or directory')
+            else:
+                self.ERRORS.file_not_found('cat', args[0])

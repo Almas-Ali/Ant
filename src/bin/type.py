@@ -1,4 +1,5 @@
 from lib.userlib import UserLib
+from lib.backtrack import Errors
 from importlib import import_module
 import subprocess
 
@@ -42,6 +43,7 @@ type help      - To get this help screen
             return False
 
     def run(self, args: list = None, *arg, **kwargs) -> None:
+        self.ERRORS = Errors()
 
         if args[0] == 'help':
             self.__help__()
@@ -53,7 +55,7 @@ type help      - To get this help screen
             # Get the type of command is it a system command or a ant command or a alias or a variable or a script or a file or a directory or a unidentified command
 
             if args[0] == '':  # if the command is empty
-                print('Syntax error !')
+                self.ERRORS.command_not_found_help('type')
 
             elif args[0][0] == '$':  # if the command is a variable
                 print('Variable')

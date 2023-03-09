@@ -1,5 +1,6 @@
 from lib.userlib import UserLib
 from lib.core import Shell, profile
+from lib.backtrack import Errors
 import glob
 from importlib import import_module
 import os
@@ -27,6 +28,7 @@ help help       - To get this help screen
         print(ver)
 
     def run(self, args: list = None, *arg, **kwargs):
+        self.ERRORS = Errors()
 
         if args[0] == 'help':
             self.__help__()
@@ -38,10 +40,12 @@ help help       - To get this help screen
                 profile['BASE_DIR'], 'bin'), '*.py')
             lists_ = [i.replace('.py', '')
                       for i in lists_]  # Removing the .py extension
+            lists_.remove('__init__')  # Removing the __init__.py file
 
             print(
-                f'Welcome to Ant Interpreter (version {import_module("core").__version__})')
+                f'Welcome to Ant Interpreter (version {import_module("lib.core").__version__})\n')
             print('Available commands are: ')
+
             for i in lists_:
                 import_module(f'bin.{i}').Exclusive().__short_help__()
 
@@ -59,7 +63,7 @@ Type \'exit\' to exit the interpreter
                 s = Shell()
                 s.execute(args[0] + ' help')
             except:
-                print('Error: Command not found')
+                self.ERRORS.command_not_found_help(args[0])
 
         # else:
         #     self.__help__()

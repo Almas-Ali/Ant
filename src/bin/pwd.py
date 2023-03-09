@@ -1,4 +1,5 @@
 from lib.userlib import UserLib
+from lib.backtrack import Errors
 import os
 
 
@@ -23,6 +24,7 @@ pwd help - To get this help screen
         print(ver)
 
     def run(self, args: list = None, *arg, **kwargs):
+        self.ERRORS = Errors()
 
         if args[0] == 'help':
             self.__help__()
@@ -30,5 +32,8 @@ pwd help - To get this help screen
         elif args[0] == '-v':
             self.__version__()
 
-        else:
+        elif args[0] == '':
             print(os.getcwd())
+
+        else:
+            self.ERRORS.command_not_found_help(args[0])
