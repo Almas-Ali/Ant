@@ -12,8 +12,18 @@ Usage:
 
 '''
 
-from lib.core import Shell
+import sys
+import os
+from pathlib import Path
+
+
+# base ant directory path (Ant/src)
+sys.path.append(
+    os.path.dirname(Path(__file__).resolve().parent)
+)
+
 from config import profile
+from lib.core import Shell
 
 
 class ANT_API:
@@ -28,12 +38,24 @@ class ANT_API:
 
     def parser(self, command: str) -> None:
         '''This function parses a command and executes it.'''
-        self.shell.execute(command)
+        return self.shell.execute(command)
 
     def script_parser(self, script: str) -> None:
         '''This function parses a script and executes it. It needs full path of the script file.'''
-        self.shell.script_executer(script)
+        return self.shell.script_executer(script)
 
     def get_version(self) -> str:
         '''This function returns the version of Ant.'''
         return self.parser('version')
+
+    def get_config(self) -> dict:
+        '''This function returns the config of Ant.'''
+        return self.profile
+
+    def get_aliases(self) -> dict:
+        '''This function returns the aliases of Ant.'''
+        return self.profile['aliases']
+
+    def start_shell(self) -> None:
+        '''This function starts the shell.'''
+        self.shell.start()
