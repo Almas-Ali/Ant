@@ -34,13 +34,11 @@ echo help   - To get this help screen
             self.__version__()
 
         else:
+            args: str = ' '.join(args)
             # Here we will always deal with args[0] as a string. We won't take any other arguments.
-            # Validate valid string or not
-            if args[0][0] == '"' and args[-1][-1] == '"' or args[0][0] == "'" and args[-1][-1] == "'":
-                pass
-            else:
-                self.ERRORS.syntax_error('echo')
-                return
+            # check the string have quotes or not
+            # if args.startswith('"') and args.endswith('"'):
+            #     ...
 
             # find all the variables
             variables = re.findall(r'\$[a-zA-Z0-9_]+', ' '.join(args))
@@ -54,7 +52,7 @@ echo help   - To get this help screen
                     self.ERRORS.undefined_error(i[1:])
 
             # Replace the string quotes
-            args = [i.replace('"', '').replace("'", '') for i in args]
+            # args = [i.replace('"', '').replace("'", '') for i in args]
 
             # A line break \n in anywhere in this string will be replaced with a break line
             print(' '.join(args).replace('\\n', '\n'))
