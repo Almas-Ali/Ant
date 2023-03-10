@@ -53,7 +53,7 @@ profile = {
 
     },
     "preloaded_actions": [
-        "logo",
-        "version",
+        # "logo",
+        # "version",
     ]
 }
