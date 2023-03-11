@@ -12,6 +12,8 @@ Usage:
 
 '''
 
+from lib.core import Shell, __version__
+from config import profile
 import sys
 import os
 from pathlib import Path
@@ -22,9 +24,6 @@ sys.path.append(
     os.path.dirname(Path(__file__).resolve().parent)
 )
 
-from config import profile
-from lib.core import Shell
-
 
 class ANT_API:
     '''The main API class for Ant.'''
@@ -32,6 +31,7 @@ class ANT_API:
     def __init__(self) -> None:
         self.profile = profile
         self.shell = Shell(alias=self.profile['aliases'])
+        self.history = []
 
         for i in self.profile['preloaded_actions']:
             self.parser(i)
@@ -46,7 +46,7 @@ class ANT_API:
 
     def get_version(self) -> str:
         '''This function returns the version of Ant.'''
-        return self.parser('version')
+        return __version__
 
     def get_config(self) -> dict:
         '''This function returns the config of Ant.'''
@@ -57,5 +57,13 @@ class ANT_API:
         return self.profile['aliases']
 
     def start_shell(self) -> None:
-        '''This function starts the shell.'''
+        '''This function starts the interactive shell CLI.'''
         self.shell.start()
+
+    def set_history(self, command: str) -> None:
+        '''This function sets the history.'''
+        self.shell.shell_history(command)
+
+    def get_history(self) -> list:
+        '''This function returns the histories.'''
+        return self.parser('history')
