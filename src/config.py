@@ -4,9 +4,9 @@ import rong
 from lib.userlib import SystemConfig
 
 
-# User"s home directory
-HOME_PATH = os.environ["HOME"]  # Production environment
-# HOME_PATH = "./" # Testing
+# User home directory
+HOME_PATH = os.path.expanduser('~')
+# Base directory of Ant Interpreter
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # PROMPT settings
@@ -42,15 +42,15 @@ profile = {
     "OPERATING_SYSTEM": OPERATING_SYSTEM,
     "history": ".ant_history",
     "aliases": {
-        "cls": "clear",
-        "dir": "ls",
+        "cls": "clear",  # cls is a windows command
+        "dir": "ls",  # dir is a windows command
         "cd": "chdir",
         "md": "mkdir",
         "rd": "rmdir",
         "print": "echo",
         "sysinfo": "whoami -a",
-        "reboot": "shutdown -r -t 0"
-
+        "reboot": "shutdown -r -t 0",
+        "doskey": "alias",  # doskey is a windows command
     },
     "preloaded_actions": [
         # "logo",
