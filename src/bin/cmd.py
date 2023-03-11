@@ -1,5 +1,7 @@
 from lib.userlib import UserLib
-import os
+from lib.backtrack import Errors
+import subprocess
+import sys
 
 
 class Exclusive(UserLib):
@@ -23,6 +25,8 @@ cmd help      - To get this help screen
         print(ver)
 
     def run(self, args: list = None, *arg, **kwargs):
+        self.ERRORS = Errors()
+
         if args[0] == 'help':
             self.__help__()
 
@@ -30,7 +34,17 @@ cmd help      - To get this help screen
             self.__version__()
 
         else:
-            try:
-                os.system(' '.join(args))
-            except:
-                print('cmd: error: command not found')
+            stdout, stderr = subprocess.Popen(
+                args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+            ).communicate()
+
+            if stdout.decode('utf-8') != '':
+                print(stdout.decode('utf-8'))
+            else:
+                # print(stderr.decode('utf-8'), file=sys.stderr)
+                self.ERRORS.command_not_found(stderr.decode('utf-8'))
+
+            # try:
+            #     os.system(' '.join(args))
+            # except:
+            #     print('cmd: error: command not found')
