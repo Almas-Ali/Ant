@@ -8,7 +8,6 @@ import sys
 import subprocess
 from lib.backtrack import Errors
 from lib.sanitizer import Sanitizer
-from lib.userlib import stdlib
 
 try:
     import readline
@@ -18,7 +17,6 @@ except:
 
 __version__ = '0.2.0'
 profile = config.profile
-write = stdlib().write
 
 
 class HistoryManager:
@@ -109,8 +107,7 @@ class Shell:
                 profile = config.profile
 
                 input_ = input(profile['PROMPT'])
-                _output = self.execute(input_)
-                write(_output) if _output else None
+                self.execute(input_)
 
                 self.store_history(input_)
 
@@ -168,7 +165,7 @@ class Shell:
 
         elif input_.get_command() == 'exit':
             self._GO = False
-            return 'exiting...'
+            print('exiting...')
 
         elif input_.get_command()[0] == '$':
             try:
@@ -234,7 +231,7 @@ class Shell:
 
         elif input_.get_command() == 'version':
             if input_.get_args() == ['']:
-                return __version__
+                print(__version__)
             else:
                 self.ERRORS.syntax_error(input_.get_args())
 
@@ -275,7 +272,7 @@ class Shell:
                     except:
                         val = self.alias[input_.get_command()]
                         val = f"{val} {' '.join(input_.get_args())}"
-                        return self.execute(val)
+                        self.execute(val)
 
                 except Exception as e:
                     # print(e)
@@ -289,10 +286,12 @@ class Shell:
                             f'{__path}/{" ".join(input_)}', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 
                         if success.decode('utf-8') != '':
-                            return success.decode('utf-8')
+                            print(success.decode('utf-8'))
+                            break
 
                         if len(self.SYSTEM_PATH) - 1 == __index:
-                            raise
+                            if fail.decode('utf-8') != '':
+                                raise # Exception(fail.decode('utf-8'))
 
             except Exception as e:
                 # print(e)
