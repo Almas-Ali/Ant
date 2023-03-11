@@ -34,7 +34,7 @@ echo help   - To get this help screen
             self.__version__()
 
         else:
-            args: str = ' '.join(args)
+            # args: str = ' '.join(args)
             # Here we will always deal with args[0] as a string. We won't take any other arguments.
             # check the string have quotes or not
             # if args.startswith('"') and args.endswith('"'):
