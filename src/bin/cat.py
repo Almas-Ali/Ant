@@ -2,8 +2,6 @@ from lib.userlib import UserLib, stdlib
 from lib.backtrack import Errors
 import os
 
-print = stdlib().write  # Standard output
-
 
 class Exclusive(UserLib):
 
