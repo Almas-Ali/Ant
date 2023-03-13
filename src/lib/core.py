@@ -2,12 +2,12 @@ import rlcompleter
 import atexit
 import os
 from importlib import import_module, reload
-import config
+from .. import config
 import glob
 import sys
 import subprocess
-from lib.backtrack import Errors
-from lib.sanitizer import Sanitizer
+from .backtrack import Errors
+from .sanitizer import Sanitizer
 
 try:
     import readline

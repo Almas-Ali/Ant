@@ -1,7 +1,7 @@
 import platform
 import os
 import rong
-from lib.userlib import SystemConfig
+from .lib.userlib import SystemConfig
 
 
 # User home directory

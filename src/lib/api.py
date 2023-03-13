@@ -12,11 +12,21 @@ Usage:
 
 '''
 
-from lib.core import Shell, __version__
-from config import profile
+
 import sys
 import os
 from pathlib import Path
+from importlib import import_module
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+print(BASE_DIR)
+
+# Shell = import_module('core', package=None).Shell
+# __version__ = import_module('lib.core', package=None).__version__
+# profile = import_module('config', package=None).profile
+
+from .core import Shell, __version__
+from ..config import profile
 
 
 # base ant directory path (Ant/src)

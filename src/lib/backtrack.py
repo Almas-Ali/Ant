@@ -1,4 +1,4 @@
-from lib.userlib import stdlib
+from .userlib import stdlib
 
 
 class Errors:
