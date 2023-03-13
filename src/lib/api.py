@@ -16,9 +16,10 @@ Usage:
 import sys
 import os
 from pathlib import Path
+from importlib import reload
 
-from .core import Shell, __version__
-from ..config import profile
+from . import core
+from .. import config
 
 
 # base ant directory path (Ant/src)
@@ -31,15 +32,21 @@ class ANT_API:
     '''The main API class for Ant.'''
 
     def __init__(self) -> None:
-        self.profile = profile
-        self.shell = Shell(alias=self.profile['aliases'])
+        self.profile = config.profile
+        self.shell = core.Shell(alias=self.profile['aliases'])
         self.history = []
 
         for i in self.profile['preloaded_actions']:
             self.parser(i)
 
+    def reload(self) -> None:
+        '''This function reloads the internal config files.'''
+        reload(config)
+        self.profile = config.profile
+
     def parser(self, command: str) -> None:
         '''This function parses a command and executes it.'''
+        self.reload()
         return self.shell.execute(command)
 
     def script_parser(self, script: str) -> None:
@@ -48,10 +55,11 @@ class ANT_API:
 
     def get_version(self) -> str:
         '''This function returns the version of Ant.'''
-        return __version__
+        return core.__version__
 
     def get_config(self) -> dict:
         '''This function returns the config of Ant.'''
+        self.reload()
         return self.profile
 
     def get_aliases(self) -> dict:
