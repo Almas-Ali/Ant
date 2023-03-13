@@ -1,5 +1,6 @@
 import platform
 import os
+import sys
 import rong
 from .lib.userlib import SystemConfig
 
@@ -8,6 +9,8 @@ from .lib.userlib import SystemConfig
 HOME_PATH = os.path.expanduser('~')
 # Base directory of Ant Interpreter
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+sys.path.append(BASE_DIR)
 
 # PROMPT settings
 path = os.getcwd()
