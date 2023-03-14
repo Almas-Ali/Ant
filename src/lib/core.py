@@ -270,7 +270,7 @@ class Shell:
                         )
 
                     except Exception as e:
-                        print(e)
+                        # print(e)
                         val = self.alias[input_.get_command()]
                         val = f"{val} {' '.join(input_.get_args())}"
                         self.execute(val)
