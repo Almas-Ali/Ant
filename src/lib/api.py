@@ -16,14 +16,9 @@ import sys
 import os
 from pathlib import Path
 from importlib import reload
-from . import core
+
 from .. import config
-
-
-# base ant directory path (Ant/src)
-sys.path.append(
-    os.path.dirname(Path(__file__).resolve().parent)
-)
+from lib import core
 
 
 class ANT_API:

@@ -2,7 +2,6 @@ import platform
 import os
 import sys
 import rong
-from .lib.userlib import SystemConfig
 
 
 # User home directory
@@ -11,6 +10,8 @@ HOME_PATH = os.path.expanduser('~')
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 sys.path.append(BASE_DIR)
+
+from lib.userlib import SystemConfig
 
 # PROMPT settings
 path = os.getcwd()

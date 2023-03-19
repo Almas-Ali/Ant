@@ -2,12 +2,12 @@ import rlcompleter
 import atexit
 import os
 from importlib import import_module, reload
-from .. import config
+import config
 import glob
 import sys
 import subprocess
-from .backtrack import Errors
-from .sanitizer import Sanitizer
+from lib.backtrack import Errors
+from lib.sanitizer import Sanitizer
 
 try:
     import readline
@@ -257,7 +257,7 @@ class Shell:
                     try:
                         # get modules from python path and reload them to get the latest changes
                         file = import_module(f'bin.{input_.get_command()}')
-                        reload(file)
+                        # reload(file)
                         file = getattr(file, 'Exclusive')
                         file = file()
 
@@ -284,7 +284,11 @@ class Shell:
                     # If not found in self.ANT_PATH, try to call system commands from self.SYSTEM_PATH
                     for __index, __path in enumerate(self.SYSTEM_PATH):
                         success, fail = subprocess.Popen(
-                            f'{__path}/{" ".join(input_)}', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+                            f'{__path}/{" ".join(input_)}', 
+                            shell=True, 
+                            stdout=subprocess.PIPE, 
+                            stderr=subprocess.PIPE
+                        ).communicate()
 
                         if success.decode('utf-8') != '':
                             print(success.decode('utf-8'))
