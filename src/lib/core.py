@@ -257,7 +257,7 @@ class Shell:
                     try:
                         # get modules from python path and reload them to get the latest changes
                         file = import_module(f'bin.{input_.get_command()}')
-                        # reload(file)
+                        reload(file)
                         file = getattr(file, 'Exclusive')
                         file = file()
 

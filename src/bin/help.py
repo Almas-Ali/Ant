@@ -36,8 +36,11 @@ help help       - To get this help screen
         elif args[0] == '':
             # Listing all the commands in the bin directory and getting their short help
             # Getting all the files in the bin directory
-            lists_ = glob.glob1(os.path.join(
-                profile['BASE_DIR'], 'bin'), '*.py')
+            lists_ = glob.glob1(
+                os.path.join(
+                    profile['BASE_DIR'], 'bin'
+                ), '*.py')
+            
             lists_ = [i.replace('.py', '')
                       for i in lists_]  # Removing the .py extension
             lists_.remove('__init__')  # Removing the __init__.py file

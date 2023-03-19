@@ -44,7 +44,7 @@ profile = {
     "ANT_PATH": ANT_PATH,
     "SYSTEM_PATH": SYSTEM_PATH,
     "OPERATING_SYSTEM": OPERATING_SYSTEM,
-    "history": ".ant_history",
+    "history": ".ant_history", # history file name
     "aliases": {
         "cls": "clear",  # cls is a windows command
         "dir": "ls",  # dir is a windows command

@@ -33,13 +33,29 @@ cmd help      - To get this help screen
             self.__version__()
 
         else:
+            if args == ['']:
+                self.__help__()
+                return
+            
+            process = subprocess.Popen(
+                args,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True
+            )
 
-            args = ' '.join(args)
-            stdout, stderr = subprocess.Popen(
-                args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
-            ).communicate()
+            for line in process.stdout:
+                print(line, end='')
+            for line in process.stderr:
+                self.ERRORS.os_command_not_found(process.stderr)
 
-            if stdout.decode('utf-8') != '':
-                print(stdout.decode('utf-8'))
-            else:
-                self.ERRORS.command_not_found(stderr.decode('utf-8'))
+            # args = ' '.join(args)
+            # stdout, stderr = subprocess.Popen(
+            #     args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+            # ).communicate()
+
+            # if stdout.decode('utf-8') != '':
+            #     print(stdout.decode('utf-8'))
+                
+            # else:
+            #     self.ERRORS.command_not_found(stderr.decode('utf-8'))

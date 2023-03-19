@@ -1,4 +1,5 @@
-from .userlib import stdlib
+from lib.userlib import stdlib
+from lib.userlib import SystemConfig
 
 
 class Errors:
@@ -6,9 +7,13 @@ class Errors:
 
     def __init__(self) -> None:
         self.output = stdlib().error
+        self.os = SystemConfig().check_os()
 
     def command_not_found(self, command: str) -> None:
         self.output(f'Ant: {command}: command not found!')
+
+    def os_command_not_found(self, command: str) -> None:
+        self.output(f'Ant: {self.os}: {command}: command not found!')
 
     def command_not_found_help(self, command: str) -> None:
         self.output(
